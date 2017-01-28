@@ -1,0 +1,45 @@
+---
+layout: layout.html
+---
+
+<div id="songs"></div>
+
+<script type="text/javascript">
+
+  var songsEl = document.getElementById('songs')
+  var embedSize = { w : 300, h : 380 }
+
+  function youtube(url) {
+    var match = url.match(/youtube\.com\/watch\?v=(\w+)/)
+    if (match) {
+      var id = match[1]
+      return '<iframe width="' + embedSize.w + '" height="' + embedSize.h + '" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>'
+    } else {
+      return null
+    }
+  }
+
+  function spotify(url) {
+    var match = url.match(/(track|album)(\/|:)(\w+)/)
+    if (match) {
+      var type = match[1]
+      var id = match[3]
+      return '<iframe src="https://embed.spotify.com/?uri=spotify%3A' + type + '%3A'+ id + '" width="' + embedSize.w + '" height="' + embedSize.h + '" frameborder="0" allowtransparency="true"></iframe>'
+    } else {
+      return null
+    }
+  }
+
+  fetch('/jams.json', { credentials: 'include' }).then(function(res) {
+    return res.json()
+  }).then(function(jams) {
+    Object.keys(jams).forEach(function(path) {
+      var user = path.replace(/\.json$/,'')
+      var jam = jams[path]
+      var div = document.createElement('div')
+      div.innerHTML = '<h2>'+user+'</h2>' + (youtube(jam.link) || spotify(jam.link))
+      songsEl.append(div)
+    })
+  })
+
+</script>
