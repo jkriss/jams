@@ -23,93 +23,22 @@ a little more peace to
     <meta charset="utf-8">
     <title>jams</title>
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2MQERH5DwABuAE8RBfWTAAAAABJRU5ErkJggg=="></link>
-    <style media="screen">
-    * {
-      margin: 0;
-      padding: 0;
-    }
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      font-family: 'Permanent Marker';
-      color: #fff;
-      background-color: #2e304e;
-      background-size: cover;
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADCAYAAABfwxXFAAAAWElEQVQYVwXBwQ1AMBSA4f+VKgc9OlkCIzCBTYxgXImLiKSKPt8nXTeqi5ZXEq+tQG/KlAiaI/20KFfAhJPHOoyvKb6MKAkZ5lUv73HbTpF9xLbh2CPeCD+jSx+ZhkbkBgAAAABJRU5ErkJggg==");
-    }
-
-    header {
-      padding: 15px 30px;
-      background: rgba(0,0,0, 0.2)
-    }
-
-    header .brand {
-      font-size: 2em;
-      text-transform: uppercase;
-    }
-
-    header .actions {
-      margin-top: 15px;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 200;
-      letter-spacing: 0.8px;
-      float: right;
-    }
-
-    header .actions a {
-      font-weight: 200;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    header .actions a:hover {
-      text-decoration: underline;
-    }
-
-    header .actions li {
-      display: inline-block;
-      padding-left: 10px;
-    }
-
-    div h2 {
-      background: rgba(0,0,0, 0.2);
-      padding: 5px 15px;;
-      font-weight: normal;
-    }
-
-    main {
-      padding: 30px;
-    }
-
-    #songs div {
-      display: inline-block;
-      padding-right: 20px;
-    }
-
-    iframe {
-      background: #111;
-      border: 1px solid #333;
-      box-shadow: 0 0 10px rgba(0,0,0, .2);
-    }
-
-    </style>
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <script src="/fetch.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       var match = document.cookie.match(/_acu=([^;]+)/)
       var user = match ? JSON.parse(decodeURIComponent(match[1])) : null
       var loggedIn = !!user
-
     </script>
   </head>
   <body>
     <header>
       <a class="brand">These are our jams.</a>
       <ul class="actions">
+        <li class="if-logged-in"><a href="#" id="new-jam">+ new jam</a></li>
         <li class="if-logged-out"><a href="/login">log in</a></li>
         <li class="if-logged-in"><a href="/logout">log out</a></li>
-        <li class="if-logged-in"><a href="#">new jam</a></li>
       </ul>
     </header>
     <main>{{content}}</main>

@@ -1,2 +1,6 @@
 jams.json:
   collection: true
+
+jams/:user.json:
+  write: $user
+  delete: $user

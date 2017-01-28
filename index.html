@@ -32,14 +32,58 @@ layout: layout.html
 
   fetch('/jams.json', { credentials: 'include' }).then(function(res) {
     return res.json()
-  }).then(function(jams) {
-    Object.keys(jams).forEach(function(path) {
+  }).then(function(jamsByPath) {
+    var jams = []
+
+    Object.keys(jamsByPath).forEach(function(path) {
       var user = path.replace(/\.json$/,'')
-      var jam = jams[path]
+      var jam = jamsByPath[path]
+      jam.user = user
+      jams.push(jam)
+    })
+
+    // newest first
+    jams = jams.sort(function(a,b) { return b.createdAt - a.createdAt })
+
+    jams.forEach(function(jam) {
       var div = document.createElement('div')
-      div.innerHTML = '<h2>'+user+'</h2>' + (youtube(jam.link) || spotify(jam.link))
+      div.innerHTML = '<h2>'+jam.user+'</h2>' + (youtube(jam.link) || spotify(jam.link))
       songsEl.append(div)
     })
   })
+
+  var postNewJam = function(url) {
+    console.log("posting", url)
+    fetch('/jams/'+user.username+'.json', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        link: url,
+        createdAt: new Date().getTime(),
+      })
+    }).then(function(res) {
+      console.log("response:", res)
+      location.reload()
+    })
+  }
+
+  var newJam = function() {
+    var url = prompt("What's the url to your jam (YouTube or Spotify)?")
+    if (url) {
+      if (youtube(url) || spotify(url)) {
+        postNewJam(url)
+      } else {
+        alert("Sorry, that isn't a supported url type")
+      }
+    }
+  }
+
+  document.getElementById('new-jam').onclick = function(evt) {
+    evt.preventDefault()
+    newJam()
+  }
 
 </script>
