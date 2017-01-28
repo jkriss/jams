@@ -1,0 +1,62 @@
+---
+layout: layout.html
+---
+<style media="screen">
+  #message {
+    margin-top: 10px;
+    font-family: 'Helvetica Nueue', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.8px;
+  }
+</style>
+
+<h1>Please join us!</h1>
+
+<form id="signup">
+  <input type="text" id="username" placeholder="username"></input>
+  <input type="password" id="password" placeholder="password"></input>
+  <button type="submit">Sign up</button>
+</form>
+
+<div id="message"></div>
+
+<script type="text/javascript">
+  var messageEl = document.getElementById('message')
+  var form = document.getElementById('signup')
+
+  var tokenMatch = window.location.search.match(/t=([^&]+)/)
+  if (tokenMatch) {
+    var token = tokenMatch[1]
+
+    form.onsubmit = function(evt) {
+      messageEl.innerHTML = ''
+      evt.preventDefault()
+      var data = {
+        token: token,
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+      }
+
+      fetch('/signup', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(function(res) {
+        console.log("response:", res)
+        if (res.status === 200) {
+          window.location = '/'
+        } else {
+          return res.text()
+        }
+      }).then(function(body) {
+        messageEl.innerText = JSON.parse(body).message
+      })
+    }
+  } else {
+    form.remove()
+    messageEl.innerText = "Sorry, you'll need a token to sign up."
+  }
+</script>

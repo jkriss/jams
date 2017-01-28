@@ -14,6 +14,11 @@ body {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADCAYAAABfwxXFAAAAWElEQVQYVwXBwQ1AMBSA4f+VKgc9OlkCIzCBTYxgXImLiKSKPt8nXTeqi5ZXEq+tQG/KlAiaI/20KFfAhJPHOoyvKb6MKAkZ5lUv73HbTpF9xLbh2CPeCD+jSx+ZhkbkBgAAAABJRU5ErkJggg==");
 }
 
+h1,h2,h3,h4 {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
 header {
   padding: 15px 30px;
   background: rgba(0,0,0, 0.2)
@@ -66,4 +71,17 @@ iframe {
   background: #111;
   border: 1px solid #333;
   box-shadow: 0 0 10px rgba(0,0,0, .2);
+}
+
+input, button {
+  font-family: 'Helvetica Nueue', Helvetica, Arial, sans-serif;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #222;
+}
+
+button {
+  background: #d6d6d6;
+  font-weight: bold;
+  padding: 10px 15px;
 }
